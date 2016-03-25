@@ -1,0 +1,68 @@
+post_install() {
+  get_app_config
+  getent group $RUN_GROUP >/dev/null || groupadd $RUN_GROUP
+  if [ ! $? -eq 0 ]
+    then
+    echo "FAILED TO CREATE '$RUN_GROUP' GROUP"
+      exit 1
+  fi
+  getent passwd $RUN_USER >/dev/null || useradd --comment '$pkgname service account' --gid $RUN_GROUP --home-dir $DATA_DIR --system --no-create-home --shell /bin/false $RUN_USER
+  if [ ! $? -eq 0 ]
+    then
+    echo "FAILED TO CREATE '$RUN_USER' USERID"
+      exit 1
+  fi
+  chown -R $RUN_USER:$RUN_GROUP $DATA_DIR
+  systemctl --system daemon-reload
+  usage_instructions
+}
+
+get_app_config() {
+  RUN_USER=minim
+  RUN_GROUP=minim
+  DATA_DIR="/var/lib/$pkgname"
+}
+
+usage_instructions() {
+get_app_config
+
+  echo "
+========================================================================
+
+$pkgname runs under systemd using a dedicated service account '$RUN_USER'
+
+systemd services are controlled using 'systemctl' subcommands, most of
+which require elevated permission to execute, although the service itself 
+is run with limited access.
+
+To start $pkgname 
+  # sudo systemctl start $pkgname
+
+To enable $pkgname to automatically start up at boot:
+  # sudo systemctl enable $pkgname
+  
+Check the current status with:
+  # systemctl status $pkgname
+
+To stop $pkgname, you issue the systemctl command:
+  # sudo systemctl stop $pkgname
+
+To restart $pkgname:
+  # systemctl restart $pkgname
+
+Application specific documentation is available at:
+	$url
+	    
+	    
+To complete the configuration once the service has been started, point
+your web browser to:
+  http://localhost:9790
+
+========================================================================
+"
+}
+
+post_upgrade() {
+  systemctl --system daemon-reload
+  usage_instructions
+}

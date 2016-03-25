@@ -1,0 +1,15 @@
+[Unit]
+Description=MinimServer
+
+[Service]
+EnvironmentFile=/etc/conf.d/minimserver
+WorkingDirectory=/usr/lib/minimserver
+User=minim
+Group=minim
+RemainAfterExit=true
+Restart=on-failure
+ExecStart=/usr/bin/minimserver
+
+[Install]
+WantedBy=network.target
+WantedBy=multi-user.target

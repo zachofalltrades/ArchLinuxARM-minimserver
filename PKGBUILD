@@ -23,7 +23,6 @@ source_armv7h=("http://jminim.com/cada/MinimServer-${pkgver}-linux-armhf.tar.gz"
 source_armv6h=("http://jminim.com/cada/MinimServer-${pkgver}-linux-armhf.tar.gz")
 source_arm=("http://jminim.com/cada/MinimServer-${pkgver}-linux-arm.tar.gz")
 source_aarch64=("http://jminim.com/cada/MinimServer-${pkgver}-linux-arm.tar.gz")
-backup=("etc/conf.d/${pkgname}")
 sha256sums=('bf66fff8a2bd14c55e62ec4e6148b566d7d0afef731f2908361cb7cde7841158'
             '27a7f52e93fede69f9b0cd779f43cfdf7a9a01d70c34f326b777f5fa7516bbe5'
             '78df35d871fbcde8e2ec81edeab96be79b40477ccc40aba1ea76de90ef3da25d'

@@ -3,8 +3,8 @@
 buildarch=1
 
 pkgname=minimserver
-pkgver=0.8.3f
-pkgrel=2
+pkgver=0.8.4
+pkgrel=1
 pkgdesc="Highly customizable and remarkably fast UPnP Audio Server."
 arch=('armv7h' 'armv6h' 'arm' 'aarch64')
 url="http://www.minimserver.com"
@@ -23,15 +23,15 @@ source_armv7h=("http://jminim.com/cada/MinimServer-${pkgver}-linux-armhf.tar.gz"
 source_armv6h=("http://jminim.com/cada/MinimServer-${pkgver}-linux-armhf.tar.gz")
 source_arm=("http://jminim.com/cada/MinimServer-${pkgver}-linux-arm.tar.gz")
 source_aarch64=("http://jminim.com/cada/MinimServer-${pkgver}-linux-arm.tar.gz")
-
+backup=("etc/conf.d/${pkgname}")
 sha256sums=('bf66fff8a2bd14c55e62ec4e6148b566d7d0afef731f2908361cb7cde7841158'
             '27a7f52e93fede69f9b0cd779f43cfdf7a9a01d70c34f326b777f5fa7516bbe5'
             '78df35d871fbcde8e2ec81edeab96be79b40477ccc40aba1ea76de90ef3da25d'
-            'aac9de68a7fb5967d53dd25b8fe89cdfcd11714410238bd2e7422dac6d7791c7')
-sha256sums_armv7h=('8c93880f2302ea9e2e8de897c27423be3fc185ac93b07e609ce325daccd6ea40')
-sha256sums_armv6h=('8c93880f2302ea9e2e8de897c27423be3fc185ac93b07e609ce325daccd6ea40')
-sha256sums_arm=('18105ec77b363829aae1b0506e0c0fe09d10f16fc9cc3c90f07c976209f3f6a2')
-sha256sums_aarch64=('18105ec77b363829aae1b0506e0c0fe09d10f16fc9cc3c90f07c976209f3f6a2')
+            '41f6cbeb1d911d56ce9e9a9a5d59e2f34f9ada5a4760e09ee7e99ed7124c849a')
+sha256sums_armv7h=('566afae00d02ac3a1598ddd4c26e63a79e0e56242d6e258d92d54611ca78808c')
+sha256sums_armv6h=('566afae00d02ac3a1598ddd4c26e63a79e0e56242d6e258d92d54611ca78808c')
+sha256sums_arm=('693ae9295b5dcc552c627e568e4f5ef962fe7d2a9efe1388a116573800d1b486')
+sha256sums_aarch64=('693ae9295b5dcc552c627e568e4f5ef962fe7d2a9efe1388a116573800d1b486')
 
 package() {
 # boilerplate systemd file placement...

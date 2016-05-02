@@ -3,7 +3,7 @@ Description=MinimServer
 
 [Service]
 EnvironmentFile=/etc/conf.d/minimserver
-WorkingDirectory=/usr/lib/minimserver
+WorkingDirectory=/var/lib/minimserver
 User=minim
 Group=minim
 RemainAfterExit=true

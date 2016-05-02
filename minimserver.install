@@ -1,12 +1,16 @@
+pkgname=minimserver
+RUN_USER=minim
+RUN_GROUP=minim
+source /etc/conf.d/$pkgname
+
 post_install() {
-  get_app_config
   getent group $RUN_GROUP >/dev/null || groupadd $RUN_GROUP
   if [ ! $? -eq 0 ]
     then
     echo "FAILED TO CREATE '$RUN_GROUP' GROUP"
       exit 1
   fi
-  getent passwd $RUN_USER >/dev/null || useradd --comment '$pkgname service account' --gid $RUN_GROUP --home-dir $DATA_DIR --system --no-create-home --shell /bin/false $RUN_USER
+  getent passwd $RUN_USER >/dev/null || useradd --comment "$pkgname service account" --gid $RUN_GROUP --home-dir $DATA_DIR --system --no-create-home --shell /bin/false $RUN_USER
   if [ ! $? -eq 0 ]
     then
     echo "FAILED TO CREATE '$RUN_USER' USERID"
@@ -17,14 +21,8 @@ post_install() {
   usage_instructions
 }
 
-get_app_config() {
-  RUN_USER=minim
-  RUN_GROUP=minim
-  DATA_DIR="/var/lib/$pkgname"
-}
 
 usage_instructions() {
-get_app_config
 
   echo "
 ========================================================================
@@ -51,7 +49,7 @@ To restart $pkgname:
   # systemctl restart $pkgname
 
 Application specific documentation is available at:
-	$url
+	${url}
 	    
 	    
 To complete the configuration once the service has been started, point
@@ -64,5 +62,6 @@ your web browser to:
 
 post_upgrade() {
   systemctl --system daemon-reload
+  systemctl restart $pkgname
   usage_instructions
 }

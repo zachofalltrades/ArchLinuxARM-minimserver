@@ -1,9 +1,14 @@
 pkgname=minimserver
-RUN_USER=minim
-RUN_GROUP=minim
-source /etc/conf.d/$pkgname
+
+get_config() {
+ RUN_USER=$(cat /usr/lib/systemd/system/${pkgname}.service|awk -F= '$1=="User"{print $2}')
+ RUN_GROUP=$(cat /usr/lib/systemd/system/${pkgname}.service|awk -F= '$1=="Group"{print $2}')
+ APP_DIR=$(cat /etc/conf.d/$pkgname|awk -F= '$1=="MINIM_HOME"{print $2}')
+ DATA_DIR=$(cat /etc/conf.d/$pkgname|awk -F= '$1=="MINIM_DATA"{print $2}')
+}
 
 post_install() {
+  get_config
   getent group $RUN_GROUP >/dev/null || groupadd $RUN_GROUP
   if [ ! $? -eq 0 ]
     then
@@ -16,14 +21,10 @@ post_install() {
     echo "FAILED TO CREATE '$RUN_USER' USERID"
       exit 1
   fi
-  chown -R $RUN_USER:$RUN_GROUP $DATA_DIR
+  chown -R $RUN_USER:$RUN_GROUP $DATA_DIR  
+  chown -R $RUN_USER $APP_DIR/tmp
+  chown -R $RUN_USER $APP_DIR/libext
   systemctl --system daemon-reload
-  usage_instructions
-}
-
-
-usage_instructions() {
-
   echo "
 ========================================================================
 
@@ -60,8 +61,12 @@ your web browser to:
 "
 }
 
+
+pre_upgrade() {
+  systemctl stop $pkgname
+}
+
 post_upgrade() {
   systemctl --system daemon-reload
   systemctl restart $pkgname
-  usage_instructions
 }

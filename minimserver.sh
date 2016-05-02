@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 cd "${MINIM_DATA}"
-java -jar ${MINIM_HOME}/lib/mserver.jar --noconsole --nohup </dev/null >minimserver.out 2>&1 &
+java -jar /usr/lib/minimserver/lib/mserver.jar --noconsole --nohup </dev/null >minimserver.out 2>&1 &
 

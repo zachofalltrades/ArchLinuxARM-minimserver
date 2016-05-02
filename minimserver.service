@@ -3,12 +3,11 @@ Description=MinimServer
 
 [Service]
 EnvironmentFile=/etc/conf.d/minimserver
-WorkingDirectory=/var/lib/minimserver
+ExecStart=/usr/bin/minimserver
 User=minim
 Group=minim
 RemainAfterExit=true
 Restart=on-failure
-ExecStart=/usr/bin/minimserver
 
 [Install]
 WantedBy=network.target

@@ -4,6 +4,7 @@ Description=MinimServer
 [Service]
 EnvironmentFile=/etc/conf.d/minimserver
 ExecStart=/usr/bin/minimserver
+WorkingDirectory=/usr/lib/minimserver
 User=minim
 Group=minim
 RemainAfterExit=true
